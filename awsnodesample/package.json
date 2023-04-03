@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "aws-sdk": "^2.1348.0"
+  },
+  "name": "aws-nodejs-sample",
+  "description": "A simple Node.js application illustrating usage of the SDK for JavaScript.",
+  "version": "1.0.1",
+  "main": "sample.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ajay Singala",
+  "license": "ISC"
+}
