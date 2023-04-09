@@ -1,0 +1,11 @@
+To create a metric filter EventCount using the AWS CLI:
+aws logs put-metric-filter --log-group-name MyApp/access.log --filter-name EventCount --filter-pattern " " --metric-transformations metricName=MyAppEventCount,metricNamespace=MyNamespace,metricValue=1,defaultValue=0
+
+To post event to EventCount data using the AWS CLI:
+aws logs put-log-events --log-group-name MyApp/access.log --log-stream-name TestStream1 --log-events timestamp=1394793518000,message="Test event 1" timestamp=1394793518000,message="Test event 2" timestamp=1394793528000,message="This message also contains an Error"
+
+To create a metric filter MyAppErrorCount using the AWS CLI:
+aws logs put-metric-filter --log-group-name MyApp/message.log --filter-name MyAppErrorCount --filter-pattern "Error" --metric-transformations metricName=ErrorCount,metricNamespace=MyNamespace,metricValue=1,defaultValue=0
+
+To post events to MyAppErrorCount using the AWS CLI:
+aws logs put-log-events --log-group-name MyApp/access.log --log-stream-name TestStream1 --log-events timestamp=1394793518000,message="This message contains an Error" timestamp=1394793528000,message="This message also contains an Error"

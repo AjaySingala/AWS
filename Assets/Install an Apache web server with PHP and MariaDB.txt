@@ -1,0 +1,37 @@
+Install an Apache web server with PHP and MariaDB:
+
+sudo yum update -y
+sudo amazon-linux-extras install php8.0 mariadb10.5
+cat /etc/system-release
+sudo yum install -y httpd
+sudo systemctl start httpd
+sudo systemctl enable httpd
+
+To set file permissions for the Apache web server:
+sudo usermod -a -G apache ec2-user
+exit
+(Log back in)
+groups
+sudo chown -R ec2-user:apache /var/www
+sudo chmod 2775 /var/www
+find /var/www -type d -exec sudo chmod 2775 {} \;
+find /var/www -type f -exec sudo chmod 0664 {} \;
+
+Connect your Apache web server to your DB instance:
+cd /var/www
+mkdir inc
+cd inc
+nano dbinfo.inc
+
+<?php
+
+define('DB_SERVER', 'db_instance_endpoint:port');
+define('DB_USERNAME', 'tutorial_user');
+define('DB_PASSWORD', 'master password');
+define('DB_DATABASE', 'sample');
+
+?>
+
+cd /var/www/html
+nano SamplePage.php
+

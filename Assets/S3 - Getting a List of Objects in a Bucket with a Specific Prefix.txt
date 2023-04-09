@@ -1,0 +1,33 @@
+{
+   "Version":"2012-10-17",
+   "Statement":[
+      {
+         "Sid":"statement1",
+         "Effect":"Allow",
+         "Principal": {
+            "AWS": "arn:aws:iam::123456789012:user/bucket-owner"
+         },  
+         "Action":  "s3:ListBucket",
+         "Resource": "arn:aws:s3:::awsexamplebucket1",
+         "Condition" : {
+             "StringEquals" : {
+                 "s3:prefix": "projects" 
+             }
+          } 
+       },
+      {
+         "Sid":"statement2",
+         "Effect":"Deny",
+         "Principal": {
+            "AWS": "arn:aws:iam::123456789012:user/bucket-owner"
+         },  
+         "Action": "s3:ListBucket",
+         "Resource": "arn:aws:s3:::awsexamplebucket1",
+         "Condition" : {
+             "StringNotEquals" : {
+                 "s3:prefix": "projects"  
+             }
+          } 
+       }         
+    ]
+}

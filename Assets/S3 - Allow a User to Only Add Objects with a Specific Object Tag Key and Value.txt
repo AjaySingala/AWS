@@ -1,0 +1,22 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [{
+        "Principal":{
+            "AWS":[
+                 "arn:aws:iam::111122223333:user/JohnDoe"
+         ]
+        },
+        "Effect": "Deny",
+        "Action": [
+            "s3:PutObject"
+        ],
+        "Resource": [
+            "arn:aws:s3:::DOC-EXAMPLE-BUCKET/*"
+        ],
+        "Condition": {
+            "StringNotEquals": {
+                "s3:RequestObjectTag/Department": "Finance"
+            }
+        }
+    }]
+}

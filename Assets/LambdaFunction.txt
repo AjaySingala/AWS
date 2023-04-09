@@ -1,0 +1,28 @@
+Sample:
+export const handler = async (event, context) => {
+  console.log("EVENT: \n" + JSON.stringify(event, null, 2));
+  return context.logStreamName;
+};
+
+async/await:
+import {S3Client, ListBucketsCommand} from '@aws-sdk/client-s3';
+const s3 = new S3Client({region: 'us-east-1'});
+   
+export const handler = async(event) => {
+  const data = await s3.send(new ListBucketsCommand({}));
+  return data.Buckets;
+        
+};
+
+Lambda function => toLowerCase:
+const toLowerCase = async (event) => {
+        let newSentence = event.sentence.toLowerCase();
+        const response = {
+                statusCode: 200,
+                body: JSON.stringify(newSentence),
+        };
+        return response;
+};
+
+export const handler = toLowerCase;
+

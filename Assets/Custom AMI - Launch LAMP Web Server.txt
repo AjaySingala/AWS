@@ -1,0 +1,40 @@
+Install LAMP Web Server on Amazon Linux 2023:
+[ec2-user ~]$ sudo dnf update -y
+[ec2-user ~]$ sudo dnf install -y httpd wget php-fpm php-mysqli php-json php php-devel
+[ec2-user ~]$ sudo dnf install mariadb105-server
+[ec2-user ~]$ sudo systemctl start httpd
+[ec2-user ~]$ sudo systemctl enable httpd
+[ec2-user ~]$ sudo systemctl is-enabled httpd
+
+To set file permissions for ec2-user:
+[ec2-user ~]$ sudo usermod -a -G apache ec2-user
+[ec2-user ~]$ exit
+[ec2-user ~]$ groups
+[ec2-user ~]$ sudo chown -R ec2-user:apache /var/www
+[ec2-user ~]$ sudo chmod 2775 /var/www && find /var/www -type d -exec sudo chmod 2775 {} \;
+[ec2-user ~]$ find /var/www -type f -exec sudo chmod 0664 {} \;
+
+Test LAMP Server:
+[ec2-user ~]$ echo "<?php phpinfo(); ?>" > /var/www/html/phpinfo.php
+[ec2-user ~]$ sudo dnf list installed httpd mariadb-server php-mysqlnd
+[ec2-user ~]$ rm /var/www/html/phpinfo.php
+
+Secure the database server:
+[ec2-user ~]$ sudo systemctl start mariadb
+[ec2-user ~]$ sudo mysql_secure_installation
+[ec2-user ~]$ sudo systemctl stop mariadb
+[ec2-user ~]$ sudo systemctl enable mariadb
+
+Install phpMyAdmin:
+[ec2-user ~]$ sudo dnf install php-mbstring php-xml -y
+[ec2-user ~]$ sudo systemctl restart httpd
+[ec2-user ~]$ sudo systemctl restart php-fpm
+[ec2-user ~]$ cd /var/www/html
+[ec2-user html]$ wget https://www.phpmyadmin.net/downloads/phpMyAdmin-latest-all-languages.tar.gz
+[ec2-user html]$ mkdir phpMyAdmin && tar -xvzf phpMyAdmin-latest-all-languages.tar.gz -C phpMyAdmin --strip-components 1
+[ec2-user html]$ rm phpMyAdmin-latest-all-languages.tar.gz
+[ec2-user ~]$ sudo systemctl start mariadb
+http://my.public.dns.amazonaws.com/phpMyAdmin
+
+
+

@@ -1,0 +1,64 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Template to Create an EC2 instance in a VPC
+
+Parameters:
+
+  ImageId:
+    Type: String
+    Description: 'Linux 2 AMI for us-east-1 Region'
+    Default: 'ami-06d3b5e1ed9e1d982'
+  VpcId:
+    Type: String
+    Description: VPC id
+    Default: <vpc-id>
+  SubnetId:
+    Type: String
+    Description: Subnet in which to launch an EC2
+    Default: <subnet-id>
+  AvailabilityZone:
+    Type: String
+    Description: Availability Zone into which instance will launch
+    Default: us-east-1a
+  InstanceType:
+    Type: String
+    Description: Choosing  t2 micro because it is free
+    Default: t2.micro
+  KeyName:
+    Description: SSH Keypair to login to the instance
+    Type: AWS::EC2::KeyPair::KeyName
+    Default: ajs-us-east-1-key-pair
+
+Resources:
+  DemoInstance:
+    Type: 'AWS::EC2::Instance'
+    Properties: 
+      ImageId: !Ref ImageId
+      InstanceType: !Ref InstanceType
+      AvailabilityZone: !Ref AvailabilityZone
+      KeyName: !Ref KeyName
+      NetworkInterfaces:
+        - DeviceIndex: 0
+          AssociatePublicIpAddress: true
+          DeleteOnTermination: true
+          SubnetId: !Ref SubnetId
+          GroupSet: 
+            - !Ref DemoSecurityGroup
+
+  DemoSecurityGroup:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      VpcId: !Ref VpcId
+      GroupDescription: SG to allow SSH access via port 22
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: '22'
+          ToPort: '22'
+          CidrIp: '0.0.0.0/0'
+      Tags:
+        - Key: Name
+          Value: sg-tcp-04apr
+
+Outputs:
+  DemoInstanceId:
+    Description: Instance Id 
+    Value: !Ref DemoInstance
