@@ -6,22 +6,19 @@ var AWS = require('aws-sdk');
 
 // Create the DynamoDB service object
 var ddb = new AWS.DynamoDB({apiVersion: '2012-08-10'});
-//var ddb = new AWS.DynamoDB.DocumentClient()
 
 var params = {
-  TableName: 'Music',
+  TableName: 'music',
   Key: {
     'Artist': {S: 'Post Malone'},
-	'SongTitle' : {S: 'Sunflower'}
-  },
-  ProjectionExpression: 'Artist, SongTitle, AlbumTitle'
-  // ProjectionExpression: 'Artist, SongTitle, AlbumTitle, Highlights'
+    'SongTitle' : {S: 'Sunflower'}
+  }
 };
 
-// Call DynamoDB to create the item in the table.
-ddb.getItem(params, function(err, data) {
+// Call DynamoDB to delete the item from the table
+ddb.deleteItem(params, function(err, data) {
   if (err) {
-    console.log("Error: ", err);
+    console.log("Error", err);
   } else {
     console.log("Success", data);
   }

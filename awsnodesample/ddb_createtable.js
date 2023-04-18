@@ -10,21 +10,21 @@ var ddb = new AWS.DynamoDB({apiVersion: '2012-08-10'});
 var params = {
   AttributeDefinitions: [
     {
-      AttributeName: 'CUSTOMER_ID',
-      AttributeType: 'N'
+      AttributeName: 'Artist',
+      AttributeType: 'S'
     },
     {
-      AttributeName: 'CUSTOMER_NAME',
+      AttributeName: 'SongTitle',
       AttributeType: 'S'
     }
   ],
   KeySchema: [
     {
-      AttributeName: 'CUSTOMER_ID',
+      AttributeName: 'Artist',
       KeyType: 'HASH'
     },
     {
-      AttributeName: 'CUSTOMER_NAME',
+      AttributeName: 'SongTitle',
       KeyType: 'RANGE'
     }
   ],
@@ -32,7 +32,7 @@ var params = {
     ReadCapacityUnits: 1,
     WriteCapacityUnits: 1
   },
-  TableName: 'CUSTOMER_LIST',
+  TableName: 'Music',
   StreamSpecification: {
     StreamEnabled: false
   }

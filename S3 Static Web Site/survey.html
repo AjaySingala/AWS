@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Survey for abc.com</title>
+</head>
+
+<body>
+  <div id="submit-survey">
+    <b>Your email :</b><input autofocus size="23" type="email" id="email"
+      placeholder="Enter your email here" /><br /><br />
+    <b>Your City :</b><input autofocus size="23" type="text" id="city" placeholder="Enter your City here" /><br /><br />
+    <b>Your feedback :</b><input autofocus size="100" type="text" id="feedback"
+      placeholder="Enter your feedback here" /><br /><br />
+    <p id="result"><b>Enter the survey above then click Submit</b></p>
+    <button class="btn default" onClick="insertSurveyData()">Submit</button>
+  </div>
+  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.410.0.min.js"></script>
+  <script type="text/javascript">
+
+    // Initialize the Amazon Cognito credentials provider
+    AWS.config.region = 'us-east-1';
+    AWS.config.credentials = new AWS.CognitoIdentityCredentials({ IdentityPoolId: 'us-east-1:4257a04b-b2c4-4e2e-bd39-0e3c938e7114' });
+
+    // Function invoked by button click
+    function insertSurveyData() {
+      // Create the DynamoDB service object
+      var ddb = new AWS.DynamoDB({ apiVersion: '2012-08-10' });
+
+      var params = {
+        TableName: 'survey',
+        Item: {
+          'email': { S: document.getElementById("email").value },
+          'city': { S: document.getElementById("city").value },
+          'feedback': { S: document.getElementById("feedback").value }
+        }
+      };
+
+      // Call DynamoDB to add the item to the table
+      ddb.putItem(params, function (err, data) {
+        if (err) {
+          document.getElementById('result').innerHTML = error;
+        } else {
+          document.getElementById('result').innerHTML = "Thanks for helping with the survey";
+        }
+      });
+    }
+  </script>
+</body>
+
+</html>

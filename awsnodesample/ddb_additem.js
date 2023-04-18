@@ -8,12 +8,12 @@ var AWS = require('aws-sdk');
 var ddb = new AWS.DynamoDB({apiVersion: '2012-08-10'});
 
 var params = {
-  TableName: 'CUSTOMER_LIST',
+  TableName: 'Music',
   Item: {
-    'CUSTOMER_ID' : {N: '001'},
-    'CUSTOMER_NAME' : {S: 'John Smith'},
-    'CUSTOMER_CITY' : {S: 'Mumbai'},
-    'CUSTOMER_STATE' : {S: 'Maharashtra'}
+    'Artist' : {S: 'Led Zeppelin'},
+    'SongTitle' : {S: 'Stairway to Heaven'},
+    'AlbumTitle' : {S: 'Led Zeppelin IV'},
+    'Highlights' : {S: 'Song of the century'}
   }
 };
 

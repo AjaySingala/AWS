@@ -6,7 +6,6 @@ var AWS = require('aws-sdk');
 
 // Create the DynamoDB service object
 var ddb = new AWS.DynamoDB({apiVersion: '2012-08-10'});
-//var ddb = new AWS.DynamoDB.DocumentClient()
 
 var params = {
   TableName: 'Music',
@@ -14,12 +13,12 @@ var params = {
     'Artist': {S: 'Post Malone'},
 	'SongTitle' : {S: 'Sunflower'}
   },
-  ProjectionExpression: 'Artist, SongTitle, AlbumTitle'
-  // ProjectionExpression: 'Artist, SongTitle, AlbumTitle, Highlights'
+  UpdateExpression: "set AlbumTitle = :album",
+  ExpressionAttributeValues : {":album":{"S":"OST - Spiderman: Into the Spider-Verse"}}
 };
 
 // Call DynamoDB to create the item in the table.
-ddb.getItem(params, function(err, data) {
+ddb.updateItem(params, function(err, data) {
   if (err) {
     console.log("Error: ", err);
   } else {
