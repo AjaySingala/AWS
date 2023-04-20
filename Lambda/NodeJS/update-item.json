@@ -1,0 +1,13 @@
+{
+    "operation": "update",
+    "payload": {
+        "Key": {
+            "id": "1234ABCD"
+        },
+        "AttributeUpdates": {
+            "number": {
+                "Value": 10
+            }
+        }
+    }
+}

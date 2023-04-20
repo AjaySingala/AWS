@@ -8,7 +8,7 @@ var AWS = require('aws-sdk');
 var ddb = new AWS.DynamoDB({apiVersion: '2012-08-10'});
 
 var params = {
-  TableName: 'music',
+  TableName: 'Music',
   Key: {
     'Artist': {S: 'Post Malone'},
     'SongTitle' : {S: 'Sunflower'}

@@ -11,11 +11,11 @@ var ddb = new AWS.DynamoDB({apiVersion: '2012-08-10'});
 var params = {
   TableName: 'Music',
   Key: {
-    'Artist': {S: 'Post Malone'},
-	'SongTitle' : {S: 'Sunflower'}
+    'Artist': {S: 'Led Zeppelin'},
+	'SongTitle' : {S: 'Stairway to Heaven'}
   },
-  ProjectionExpression: 'Artist, SongTitle, AlbumTitle'
-  // ProjectionExpression: 'Artist, SongTitle, AlbumTitle, Highlights'
+  // ProjectionExpression: 'Artist, SongTitle, AlbumTitle'
+  ProjectionExpression: 'Artist, SongTitle, AlbumTitle, Highlights'
 };
 
 // Call DynamoDB to create the item in the table.

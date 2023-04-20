@@ -1,0 +1,26 @@
+Create Lambda function (NodeJS):
+aws lambda create-function --function-name LambdaFunctionOverHttps --zip-file fileb://function.zip --handler index.handler --runtime nodejs18.x --role arn:aws:iam::667612002133:role/lambda-apigateway-role
+
+Invoke the function using the AWS CLI:
+aws lambda invoke --function-name LambdaFunctionOverHttps --payload file://input.txt outputfile.txt --cli-binary-format raw-in-base64-out
+
+
+Invoke API to create item using Postman:
+POST https://p5fwhjkhud.execute-api.us-east-1.amazonaws.com/test/dynamodbmanager 
+Body -> Raw -> JSON: '{"operation": "create", "payload": {"Item": {"id": "5678EFGH", "number": 15}}}'
+
+Invoke API using curl:
+On Windows:
+curl https://2hjzn6u40e.execute-api.us-east-1.amazonaws.com/test/dynamodbmanager -d "{\"operation\": \"create\", \"payload\": {\"Item\": {\"id\": \"5678EFGH\", \"number\": 15}}}"
+
+On Linux:
+curl https://2hjzn6u40e.execute-api.us-east-1.amazonaws.com/test/dynamodbmanager -d '{"operation": "create", "payload": {"Item": {"id": "5678EFGH", "number": 15}}}'
+
+To delete the item:
+On Windows:
+curl https://2hjzn6u40e.execute-api.us-east-1.amazonaws.com/test/dynamodbmanager -d "{\"operation\": \"delete\", \"payload\": {\"Key\": {\"id\": \"5678EFGH\"}}}"
+
+On linux:
+curl https://2hjzn6u40e.execute-api.us-east-1.amazonaws.com/test/dynamodbmanager \
+-d '{"operation": "delete", "payload": {"Key": {"id": "5678EFGH"}}}'
+
